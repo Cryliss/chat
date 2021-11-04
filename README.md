@@ -8,7 +8,9 @@ A Chat Application for Remote Message Exchange
 ## Getting Started with Chatty
 ### Building the Program
 1. [Download Go](https://golang.org/dl/), if you don't already have it installed on your local machine.  
-2. Place this entire folder in your Go source code directory. e.g. `/Users/sabra/go/src`  
+2. Download the source code via one of these two methods  
+    a. Clone the repository by running `git clone https://github.com/Cryliss/comp-429.git` in the terminal  
+    b. Download the source code directly from GitHub, and place it in your Go source code directory - e.g. `/Users/sabra/go/src`  
 3. From terminal, navigate to the chat application directory. e.g. `cd ~/go/src/chat`
 4. Run `make build` to build the applications binary file
 
