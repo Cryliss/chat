@@ -35,7 +35,6 @@ func main() {
     }
 
     // Get the ip address of the machine running the program
-    p := fmt.Sprintf("%d", port)
     ip := GetOutboundIP(p)
 
     // Create a new server
@@ -69,7 +68,7 @@ func main() {
             app.OutErr("ERROR %v\n", err)
         }
     }
-}
+} // }}}
 
 // func GetOutboundIP() {{{
 //
