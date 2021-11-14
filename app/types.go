@@ -14,7 +14,6 @@ var commands = map[string]string{
     "6": "terminate",
     "7": "send",
     "8": "exit",
-    "9": "info",
 }
 
 type Application struct {
