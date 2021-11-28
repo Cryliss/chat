@@ -1,5 +1,7 @@
 Chatty
 ------
+[![Go Reference](https://pkg.go.dev/badge/github.com/Cryliss/gocors.svg)](https://pkg.go.dev/github.com/Cryliss/chat)  [![GoReportCard example](https://goreportcard.com/badge/github.com/Cryliss/gocors)](https://goreportcard.com/report/github.com/Cryliss/chat)
+
 **COMP 429 Programming Assignment 1**  
 A Chat Application for Remote Message Exchange  
 *by Sabra Bilodeau*  
