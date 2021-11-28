@@ -1,3 +1,4 @@
+// Package server provides server functionality for the Chat application
 package server
 
 import (
@@ -64,6 +65,16 @@ func (s *Server) Listen() {
 				return
 			}
 
+            // We don't know what this error is, but its not a closed socket?
+			//
+			// Log it and attempt to continue.
+			s.app.OutErr("AcceptTCP(%s): %s\nPlease enter a command: ", s.listener.Addr(), err)
+
+            // Increase the error count, since we do not specifically
+            // handle this error, we are unsure if its safe to continue
+            // listening or not.
+            errs++
+
             // If we get too many errors in a row that we are not programmed
             // here to handle, we close the listening socket and return.
             //
@@ -77,16 +88,6 @@ func (s *Server) Listen() {
 
 				return
 			}
-
-            // We don't know what this error is, but its not a closed socket?
-			//
-			// Log it and attempt to continue.
-			s.app.OutErr("AcceptTCP(%s): %s\nPlease enter a command: ", s.listener.Addr(), err)
-
-            // Increase the error count, since we do not specifically
-            // handle this error, we are unsure if its safe to continue
-            // listening or not.
-            errs++
         }
 
         // We have a new connection with no errors, so reset the error counter if needed.
@@ -110,16 +111,16 @@ func (s *Server) Listen() {
         c := client.New(conn, connAddr, id, s.app)
 
         // Add the new client to our sync map
-        s.conns.Store(c.Id, c)
+        s.conns.Store(c.ID, c)
 
         // Add the new ID to our ids array -- this is only used so
         // we can get a sorted list of connections when List() is called
         s.mu.Lock()
-        s.ids = append(s.ids, c.Id)
+        s.ids = append(s.ids, c.ID)
         s.mu.Unlock()
 
         // Inform the user of the new connection
-        s.app.Out("\nNew incoming connection: %v | %v:%v\n\nPlease enter a command: ", c.Id, c.IP, c.Port)
+        s.app.Out("\nNew incoming connection: %v | %v:%v\n\nPlease enter a command: ", c.ID, c.IP, c.Port)
 
         // Handle the connection in a new goroutine.
         //
@@ -134,7 +135,7 @@ func (s *Server) Listen() {
     			//
     			// So we remove ourself from the connect list
                 // automatically when we return here.
-    			s.conns.Delete(c.Id)
+    			s.conns.Delete(c.ID)
 
                 // We also (just in case), call Close() on the connection
                 // again,  as this will handle any other errors that don't
@@ -186,8 +187,12 @@ func (s *Server) checkExisting(ip, port string) bool {
 func (s *Server) Connect(destination, port string) error {
     connErr := errors.New("s.Connect: connection already exists")
     selfErr := errors.New("s.Connect: self connections not allowed")
-    invIpErr := errors.New(fmt.Sprintf("s.Connect: invalid ip given! %s:%s", destination, port))
-    invPortErr := errors.New(fmt.Sprintf("s.Connect: invalid port given! Dial request timed out %s:%s", destination, port))
+
+    invIP := fmt.Sprintf("s.Connect: invalid ip given! %s:%s", destination, port)
+    invIPErr := errors.New(invIP)
+
+    invPort := fmt.Sprintf("s.Connect: invalid port given! Dial request timed out %s:%s", destination, port)
+    invPortErr := errors.New(invPort)
 
     // Does this connection already exist?
     if s.checkExisting(destination, port) {
@@ -203,7 +208,7 @@ func (s *Server) Connect(destination, port string) error {
     // Were we given an invalid IP address?
     ip := net.ParseIP(destination)
     if ip == nil {
-        return invIpErr
+        return invIPErr
     }
 
     // Create a new net Dialer and set the timeout to be 10 seconds
@@ -241,12 +246,12 @@ func (s *Server) Connect(destination, port string) error {
     c := client.New(tcpConn, connAddr, id, s.app)
 
     // Add the new client to our sync map
-    s.conns.Store(c.Id, c)
+    s.conns.Store(c.ID, c)
 
     // Add the new ID to our ids array -- this is only used so
     // we can get a sorted list of connections when List() is called
     s.mu.Lock()
-    s.ids = append(s.ids, c.Id)
+    s.ids = append(s.ids, c.ID)
     s.mu.Unlock()
 
     // Inform the user of the new connection
@@ -265,7 +270,7 @@ func (s *Server) Connect(destination, port string) error {
             //
             // So we remove ourself from the connect list
             // automatically when we return here.
-            s.conns.Delete(c.Id)
+            s.conns.Delete(c.ID)
 
             // We also (just in case), call Close() on the connection
             // again,  as this will handle any other errors that don't
@@ -312,7 +317,7 @@ func (s *Server) List() {
         }
 
         // Print the connection details
-        s.app.Out(" %d | %s | %s\n", c.Id, c.IP, c.Port)
+        s.app.Out(" %d | %s | %s\n", c.ID, c.IP, c.Port)
     }
 } // }}}
 
@@ -386,7 +391,7 @@ func (s *Server) Send(conn int, message string) error {
     // Okay now that we've loaded the connection, let's try to send
     // the message
     c.Conn.Write(msg)
-    s.app.Out("Message sent to connection %d!\n", c.Id)
+    s.app.Out("Message sent to connection %d!\n", c.ID)
     return nil
 } // }}}
 
@@ -406,7 +411,7 @@ func (s *Server) Exit() {
 
         // Try and close the connection
         if err := c.CloseConn(); err != nil {
-            s.app.OutErr("s.Exit: error closing connection %d! err:=%v\n", c.Id, err)
+            s.app.OutErr("s.Exit: error closing connection %d! err:=%v\n", c.ID, err)
             return false
         }
         return true

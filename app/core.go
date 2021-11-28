@@ -44,7 +44,7 @@ func (a *Application) Out(format string, b ...interface{}) {
 } // }}}
 
 // func a.OutErr {{{
-//
+
 // OutErr Prints message to the standard output error device
 func (a *Application) OutErr(format string, b ...interface{}) {
     // We're we given any variables that should be added to the string?

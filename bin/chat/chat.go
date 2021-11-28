@@ -71,9 +71,9 @@ func main() {
     }
 } // }}}
 
-// func GetOutboundIP() {{{
-//
-// Get preferred outbound ip of this machine
+// func GetOutboundIP {{{
+
+// GetOutboundIP gets preferred outbound ip of this machine
 // src: https://stackoverflow.com/a/37382208
 func GetOutboundIP(port string) string {
     s := "8.8.8.8:" + port

@@ -1,3 +1,4 @@
+// Package client handles new client connections 
 package client
 
 import (
@@ -15,7 +16,7 @@ import (
 func New(conn *net.TCPConn, addr []string, id uint32, app types.Application) *Client {
     client := Client{
         app: app,
-        Id: id,
+        ID: id,
         IP: addr[0],
         Port: addr[1],
         Conn: conn,
@@ -50,7 +51,7 @@ func (c *Client) HandleClient() {
 
             // EOF?
             if e == "EOF" {
-                c.app.OutErr("\n\nPeer has terminated the connection - closing client# %d now.\n\nPlease enter a command: ", c.Id)
+                c.app.OutErr("\n\nPeer has terminated the connection - closing client# %d now.\n\nPlease enter a command: ", c.ID)
             }
             break
         }
@@ -74,9 +75,9 @@ func (c *Client) HandleClient() {
     }
 } // }}}
 
-// func c.closeConn {{{
+// func c.CloseConn {{{
 
-// closeConn Handles closing connections, sending a message to the connection
+// CloseConn Handles closing connections, sending a message to the connection
 // prior to closing it. Returns any errors that may occur
 func (c *Client) CloseConn() error {
     // Try closing the connection and handle any errors that may happen
@@ -93,6 +94,6 @@ func (c *Client) CloseConn() error {
     }
 
     // Connction was successfully closed, let the user know and return
-    c.app.Out("Successfully closed connection %d\n", c.Id)
+    c.app.Out("Successfully closed connection %d\n", c.ID)
     return nil
 } // }}}

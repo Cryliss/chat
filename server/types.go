@@ -1,3 +1,4 @@
+// Package server provides server functionality for the Chat application
 package server
 
 import (
@@ -8,6 +9,7 @@ import (
 
 // type Server struct {{{
 
+// Server holds private information related to the server
 type Server struct {
     // Our application so we can display messages to the user
     //
@@ -32,7 +34,7 @@ type Server struct {
     // Locks reading on this struct, avoids data races!
     mu sync.Mutex
 
-    // The next availabe connection ID
+    // The next available connection ID
     //
     // Only access this using atomics!
     nextID uint32

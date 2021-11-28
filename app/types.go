@@ -1,3 +1,4 @@
+// Package app provides user input functionality
 package app
 
 import "github.com/Cryliss/chat/types"
@@ -16,6 +17,7 @@ var commands = map[string]string{
     "8": "exit",
 }
 
+// Application holds details related to our application
 type Application struct {
     s           types.Server
 
