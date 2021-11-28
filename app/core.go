@@ -1,7 +1,8 @@
+// Package app provides user input functionality
 package app
 
 import (
-    "chat/types"
+    "github.com/Cryliss/chat/types"
     "errors"
     "fmt"
     "net"
@@ -11,8 +12,8 @@ import (
 )
 
 // func New {{{
-//
-// Initializes & returns a new application and any errors that may have occurred.
+
+// New Initializes & returns a new application and any errors that may have occurred.
 func New(port int, ip string, server types.Server) (*Application, error) {
     // Let's generate our service string, in the format "{ip}:{port}"
     portStr := fmt.Sprintf("%d", port)
@@ -30,8 +31,8 @@ func New(port int, ip string, server types.Server) (*Application, error) {
 } // }}}
 
 // func a.Out {{{
-//
-// Prints message to the standard output device
+
+// Out Prints message to the standard output device
 func (a *Application) Out(format string, b ...interface{}) {
     // We're we given any variables that should be added to the string?
     if b == nil {
@@ -44,7 +45,7 @@ func (a *Application) Out(format string, b ...interface{}) {
 
 // func a.OutErr {{{
 //
-// Prints message to the standard output error device
+// OutErr Prints message to the standard output error device
 func (a *Application) OutErr(format string, b ...interface{}) {
     // We're we given any variables that should be added to the string?
     if b == nil {
@@ -57,7 +58,7 @@ func (a *Application) OutErr(format string, b ...interface{}) {
 } // }}}
 
 // func a.startupText {{{
-//
+
 // Prints the text that should be displayed on application startup
 func (a *Application) startupText() {
     sText := `
@@ -80,8 +81,8 @@ Type 'help' for an explanation of each command, or type 'help <command>' to get 
 } // }}}
 
 // func a.ParseInput {{{
-//
-// Parses the users input and calls the function associated with
+
+// ParseInput Parses the users input and calls the function associated with
 // the given command
 func (a *Application) ParseInput(userInput string) error {
     // Split the users input into array of strings
@@ -189,15 +190,15 @@ func (a *Application) ParseInput(userInput string) error {
         a.s.Exit()
         return nil
     default:
-        // We didn't find a matching command for their input, let's throw an error 
+        // We didn't find a matching command for their input, let's throw an error
         return inputErr
     }
     return nil
 }  // }}}
 
 // func a.help {{{
-//
-// Prints the application commands
+
+// help Prints the application commands
 func (a *Application) help(command string) {
     a.Out("\nApplication Commands\n")
     a.Out("--------------------\n")
@@ -272,15 +273,15 @@ for example:
 } // }}}
 
 // func a.myip {{{
-//
-// Prints the users IP address
+
+// myip Prints the users IP address
 func (a *Application) myip() {
     a.Out("Your IP address is: %s\n", a.ip)
 } // }}}
 
 // func a.myport {{{
-//
-// Prints the users port number
+
+// myport Prints the users port number
 func (a *Application) myport() {
     a.Out("Your port is: %d\n", a.port)
 } // }}}

@@ -1,7 +1,7 @@
 package client
 
 import (
-    "chat/types"
+    "github.com/Cryliss/chat/types"
     "net"
 )
 
@@ -18,7 +18,7 @@ type Client struct {
     IP string
 
     // Connections port number
-    Port string 
+    Port string
 
     // The actual connection itself
     Conn *net.TCPConn

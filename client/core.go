@@ -1,7 +1,7 @@
 package client
 
 import (
-    "chat/types"
+    "github.com/Cryliss/chat/types"
     "errors"
     "fmt"
     "net"
@@ -10,8 +10,8 @@ import (
 )
 
 // func New {{{
-//
-// Initializes and returns a new Client struct
+
+// New Initializes and returns a new Client struct
 func New(conn *net.TCPConn, addr []string, id uint32, app types.Application) *Client {
     client := Client{
         app: app,
@@ -24,8 +24,8 @@ func New(conn *net.TCPConn, addr []string, id uint32, app types.Application) *Cl
 } // }}}
 
 // func c.HandleClient {{{
-//
-// Handler for client connections - reads from the connection and displays
+
+// HandleClient Handler for client connections - reads from the connection and displays
 // the message to the user.
 // help src: https://ipfs.io/ipfs/QmfYeDhGH9bZzihBUDEQbCbTc5k5FZKURMUoUvfmc27BwL/socket/tcp_sockets.html
 func (c *Client) HandleClient() {
@@ -75,8 +75,8 @@ func (c *Client) HandleClient() {
 } // }}}
 
 // func c.closeConn {{{
-//
-// Handles closing connections, sending a message to the connection
+
+// closeConn Handles closing connections, sending a message to the connection
 // prior to closing it. Returns any errors that may occur
 func (c *Client) CloseConn() error {
     // Try closing the connection and handle any errors that may happen

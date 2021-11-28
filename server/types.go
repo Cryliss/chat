@@ -1,7 +1,7 @@
 package server
 
 import (
-    "chat/types"
+    "github.com/Cryliss/chat/types"
     "net"
     "sync"
 )

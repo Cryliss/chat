@@ -2,8 +2,8 @@ package main
 
 import (
     "bufio"
-    "chat/app"
-    "chat/server"
+    "github.com/Cryliss/chat/app"
+    "github.com/Cryliss/chat/server"
     "flag"
     "fmt"
     "net"
@@ -12,8 +12,8 @@ import (
 )
 
 // func usage {{{
-//
-// Prints information on how to use the program and then exits
+
+// usage Prints information on how to use the program and then exits
 func usage() {
     fmt.Printf("usage: %s\n", os.Args[0])
     flag.PrintDefaults()
@@ -21,7 +21,7 @@ func usage() {
 } // }}}
 
 // func main {{{
-//
+
 func main() {
     var port int
 

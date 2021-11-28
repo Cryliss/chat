@@ -1,6 +1,6 @@
 package app
 
-import "chat/types"
+import "github.com/Cryliss/chat/types"
 
 // Commands the user can give the application
 // We are using a map[string]string here, just in case

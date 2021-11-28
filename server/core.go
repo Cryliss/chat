@@ -1,8 +1,8 @@
 package server
 
 import (
-    "chat/client"
-    "chat/types"
+    "github.com/Cryliss/chat/client"
+    "github.com/Cryliss/chat/types"
     "errors"
     "fmt"
     "net"
@@ -15,7 +15,7 @@ import (
 
 // func New {{{
 
-// Initializes and returns a new Server.
+// New initializes and returns a new Server.
 func New(ip string, port int) *Server {
     var s Server
     var err error
@@ -32,7 +32,7 @@ func New(ip string, port int) *Server {
 
     // Create a new TCP Listener using our tcpAddr
     if s.listener, err = net.ListenTCP("tcp", &s.bindy); err != nil {
-        fmt.Printf("server.New: error - net.ListenTCP(%s): %v", s.bindy, err)
+        fmt.Printf("server.New: error - net.ListenTCP(%v): %s", s.bindy, err.Error())
         os.Exit(-1)
     }
 
@@ -41,16 +41,16 @@ func New(ip string, port int) *Server {
 } // }}}
 
 // func s.SetApplication {{{
-//
-// Sets the application of the server, since we make the server
+
+// SetApplication sets the application of the server, since we make the server
 // prior to making the application
 func (s *Server) SetApplication(app types.Application) {
     s.app = app
 } // }}}
 
 // func s.Listen {{{
-//
-// Uses the servers listener to continuously accept incoming TCP connections
+
+// Listen uses the servers listener to continuously accept incoming TCP connections
 func (s *Server) Listen() {
     var errs int
     for {
@@ -149,8 +149,8 @@ func (s *Server) Listen() {
 } // }}}
 
 // func s.checkExisting {{{
-//
-// Checks if the the connection attempting to be establed
+
+// checkExisting checks if the the connection attempting to be establed
 // already exists or not
 func (s *Server) checkExisting(ip, port string) bool {
     found := false
@@ -180,12 +180,12 @@ func (s *Server) checkExisting(ip, port string) bool {
 } // }}}
 
 // func s.Connect {{{
-//
-// Attempts to establish a new connection, returning an error should
+
+// Connect attempts to establish a new connection, returning an error should
 // anything go wrong
 func (s *Server) Connect(destination, port string) error {
-    connErr := errors.New("s.Connect: connection already exists!")
-    selfErr := errors.New("s.Connect: self connections not allowed!")
+    connErr := errors.New("s.Connect: connection already exists")
+    selfErr := errors.New("s.Connect: self connections not allowed")
     invIpErr := errors.New(fmt.Sprintf("s.Connect: invalid ip given! %s:%s", destination, port))
     invPortErr := errors.New(fmt.Sprintf("s.Connect: invalid port given! Dial request timed out %s:%s", destination, port))
 
@@ -281,8 +281,8 @@ func (s *Server) Connect(destination, port string) error {
 } // }}}
 
 // func s.List {{{
-//
-// Lists the IP addresses and port numbers associated with all
+
+// List lists the IP addresses and port numbers associated with all
 // currently established connections
 func (s *Server) List() {
     s.app.Out("id |  IP Address   | Port\n")
@@ -317,8 +317,8 @@ func (s *Server) List() {
 } // }}}
 
 // func s.Terminate {{{
-//
-// Terminates the connection associated with the given connection id,
+
+// Terminate terminates the connection associated with the given connection id,
 // returning an error should anything go wrong
 func (s *Server) Terminate(conn int) error {
     invInput := fmt.Sprintf("s.Terminate: must give a valid connection ID! Use list to see a list of all current connections.")
@@ -351,8 +351,8 @@ func (s *Server) Terminate(conn int) error {
 } // }}}
 
 // func s.Send {{{
-//
-// Attempts to send a given message to the connection associated with the
+
+// Send attempts to send a given message to the connection associated with the
 // given connection id, returning an error should anything go wrong
 func (s *Server) Send(conn int, message string) error {
     invInput := fmt.Sprintf("s.Send: %d invalid ID! Use list to see a list of all current connections", conn)
@@ -391,8 +391,8 @@ func (s *Server) Send(conn int, message string) error {
 } // }}}
 
 // func s.Exit {{{
-//
-// Exits the program, closing any established connections prior to doing so
+
+// Exit exits the program, closing any established connections prior to doing so
 func (s *Server) Exit() {
     s.app.Out("Closing any established connections .. \n")
 
